@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Administração - Decap CMS</title>
+
+  <!-- Decap CMS -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <!-- Estilos customizados opcionais -->
+  <style>
+    :root {
+      --primary-color: #0f1419;
+      --secondary-color: #1a2332;
+    }
+  </style>
+</head>
+<body>
+  <!-- Decap CMS será carregado aqui -->
+
+  <script>
+    // Configurações customizadas do editor (opcional)
+    CMS.registerPreviewStyle("/css/admin-preview.css");
+
+    // Preview templates customizados podem ser adicionados aqui
+    CMS.registerPreviewTemplate("posts", ({ entry, widgetFor }) => {
+      return `
+        <article>
+          <h1>${entry.getIn(["data", "title"])}</h1>
+          <time>${new Date(entry.getIn(["data", "date"])).toLocaleDateString('pt-BR')}</time>
+          <div>${widgetFor("body")}</div>
+        </article>
+      `;
+    });
+  </script>
+</body>
+</html>

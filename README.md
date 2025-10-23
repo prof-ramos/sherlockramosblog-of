@@ -10,6 +10,7 @@ Blog estático em Hugo configurado com o tema PaperMod (ProfileMode) e conteúdo
 - [Requisitos](#requisitos)
 - [Como Executar](#como-executar)
 - [Fluxo de Conteúdo](#fluxo-de-conteúdo)
+- [Decap CMS](#decap-cms)
 - [Personalização de Tema](#personalização-de-tema)
 - [Documentação Interna](#documentação-interna)
 - [Contribuição](#contribuição)
@@ -19,17 +20,23 @@ Blog estático em Hugo configurado com o tema PaperMod (ProfileMode) e conteúdo
 - Gerador estático: Hugo `v0.146.0`, configurado em `hugo.yaml`.
 - Tema: PaperMod com ProfileMode, botões de navegação e ícones sociais.
 - Idioma padrão: Português do Brasil (`defaultContentLanguage: pt-br`).
-- Deploy: saída no diretório `public/`, pronta para qualquer serviço de hospedagem estática.
+- CMS: Decap CMS (anteriormente Netlify CMS) para edição web de conteúdo.
+- Deploy: GitHub Pages com GitHub Actions (deploy automático).
+- Site: https://prof-ramos.github.io/sherlockramosblog-of/
 
 ## Estrutura do Projeto
 ```text
 .
+├── .github/workflows/    # GitHub Actions (deploy automático)
 ├── archetypes/           # Arquétipos para novos conteúdos (ex.: posts)
 ├── assets/css/extended/  # Overrides de estilo (custom.css)
 ├── content/              # Markdown do site (posts, about, etc.)
 ├── docs/                 # Guias internos sobre personalização e UX
+├── i18n/                 # Traduções pt-BR
 ├── layouts/              # Sobrescritas de layouts do PaperMod
 ├── static/               # Arquivos estáticos servidos como estão
+│   ├── admin/            # Decap CMS (interface de administração)
+│   └── images/uploads/   # Uploads de imagens via CMS
 ├── build.sh              # Script que instala e executa o Hugo fixo
 ├── hugo.yaml             # Configuração principal
 └── public/               # Saída gerada (não editar manualmente)
@@ -59,12 +66,42 @@ Gera a versão otimizada removendo assets órfãos.
 Garante a versão oficial do Hugo e executa o build completo (recomendado antes de publicar).
 
 ## Fluxo de Conteúdo
+
+### Via Linha de Comando
 - Crie novos posts com:
   ```bash
   hugo new posts/meu-post.md
   ```
 - Use nomes de arquivo em *kebab-case* e mantenha o front matter em YAML (`title`, `date`, `draft`, `tags`).
 - Para conteúdos em rascunho, mantenha `draft: true` até a revisão final.
+
+### Via Decap CMS (Interface Web)
+- Acesse: https://prof-ramos.github.io/sherlockramosblog-of/admin/
+- Faça login com GitHub
+- Crie e edite posts através da interface amigável
+- Veja detalhes em `docs/5-configuracao-decapcms.md`
+
+## Decap CMS
+
+O projeto está configurado com Decap CMS para gerenciamento de conteúdo via web.
+
+**Acesso**: `/admin/` (https://prof-ramos.github.io/sherlockramosblog-of/admin/)
+
+**Funcionalidades**:
+- ✅ Editor Markdown visual
+- ✅ Upload de imagens
+- ✅ Gerenciamento de posts e páginas
+- ✅ Interface em Português
+- ✅ Commits automáticos no GitHub
+
+**Configuração necessária**:
+1. Criar OAuth App no GitHub (veja `docs/5-configuracao-decapcms.md`)
+2. Opcionalmente, fazer deploy no Netlify para autenticação simplificada
+
+**Arquivos**:
+- `static/admin/config.yml` - Configuração do CMS
+- `static/admin/index.html` - Interface do CMS
+- `docs/5-configuracao-decapcms.md` - Guia completo de configuração
 
 ## Personalização de Tema
 - Ajuste cores e variáveis em `assets/css/extended/custom.css`.
@@ -76,6 +113,7 @@ Garante a versão oficial do Hugo e executa o build completo (recomendado antes 
 - `docs/2-criacao-de-conteudo.md`: passos para publicar conteúdo.
 - `docs/3-mudanca-tema-navy.md`: histórico do tema azul-marinho.
 - `docs/4-avaliacao-ui-ux.md`: relatório de UX.
+- `docs/5-configuracao-decapcms.md`: configuração completa do Decap CMS.
 
 ## Contribuição
 - Consulte `AGENTS.md` para orientações completas (estrutura, comandos e revisão).

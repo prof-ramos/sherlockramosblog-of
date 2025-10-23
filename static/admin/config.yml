@@ -1,0 +1,85 @@
+backend:
+  name: github
+  repo: prof-ramos/sherlockramosblog-of
+  branch: main
+  # Para autenticação via GitHub OAuth
+  # Você precisará configurar um OAuth App em: https://github.com/settings/developers
+  # E adicionar as credenciais em: https://github.com/prof-ramos/sherlockramosblog-of/settings/secrets/actions
+
+# Configuração de mídia
+media_folder: "static/images/uploads"
+public_folder: "/images/uploads"
+
+# Idioma da interface
+locale: 'pt'
+
+# Collections - Tipos de conteúdo
+collections:
+  # Posts do blog
+  - name: "posts"
+    label: "Posts"
+    label_singular: "Post"
+    folder: "content/posts"
+    create: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Data de Publicação", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "DD/MM/YYYY", time_format: "HH:mm" }
+      - { label: "Rascunho", name: "draft", widget: "boolean", default: true, required: false }
+      - { label: "Tags", name: "tags", widget: "list", required: false, hint: "Adicione tags para categorizar o post" }
+      - { label: "Resumo", name: "summary", widget: "text", required: false, hint: "Breve descrição do post (opcional)" }
+      - { label: "Imagem de Capa", name: "cover", widget: "object", required: false, fields: [
+          { label: "URL da Imagem", name: "image", widget: "image", required: false },
+          { label: "Texto Alternativo", name: "alt", widget: "string", required: false },
+          { label: "Caption", name: "caption", widget: "string", required: false },
+          { label: "Imagem Relativa", name: "relative", widget: "boolean", default: false, required: false }
+        ]}
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
+
+  # Página Sobre
+  - name: "pages"
+    label: "Páginas"
+    label_singular: "Página"
+    files:
+      - label: "Sobre"
+        name: "about"
+        file: "content/about/_index.md"
+        fields:
+          - { label: "Título", name: "title", widget: "string" }
+          - { label: "Data", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "DD/MM/YYYY", time_format: "HH:mm" }
+          - { label: "Conteúdo", name: "body", widget: "markdown" }
+
+  # Configurações do Site
+  - name: "settings"
+    label: "Configurações"
+    files:
+      - label: "Configurações do Hugo"
+        name: "hugo"
+        file: "hugo.yaml"
+        fields:
+          - { label: "URL Base", name: "baseURL", widget: "string" }
+          - { label: "Título do Site", name: "title", widget: "string" }
+          - { label: "Código de Idioma", name: "languageCode", widget: "string", default: "pt-br" }
+          - label: "Parâmetros"
+            name: "params"
+            widget: "object"
+            fields:
+              - { label: "Ambiente", name: "env", widget: "select", options: ["production", "development"], default: "production" }
+              - { label: "Descrição", name: "description", widget: "text" }
+              - { label: "Autor", name: "author", widget: "string" }
+              - label: "Modo Perfil"
+                name: "profileMode"
+                widget: "object"
+                fields:
+                  - { label: "Habilitado", name: "enabled", widget: "boolean", default: true }
+                  - { label: "Título", name: "title", widget: "string" }
+                  - { label: "Subtítulo", name: "subtitle", widget: "string" }
+                  - { label: "URL da Imagem", name: "imageUrl", widget: "string", required: false }
+              - label: "Ícones Sociais"
+                name: "socialIcons"
+                widget: "list"
+                fields:
+                  - { label: "Nome", name: "name", widget: "select", options: ["github", "twitter", "linkedin", "facebook", "instagram", "youtube", "email"] }
+                  - { label: "URL", name: "url", widget: "string" }

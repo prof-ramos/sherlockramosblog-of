@@ -1,0 +1,50 @@
+run = "hugo && miniserve public --index index.html"
+entrypoint = "content/posts/hello.md"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+build = ["bash", "build.sh"]
+deploymentTarget = "autoscale"
+publicDir = "public"
+run = ["~/.local/bin/hugo", "server", "--bind", "0.0.0.0", "--port", "5000", "--baseURL", "/", "--appendPort=false"]
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 46127
+externalPort = 3001
+
+[[ports]]
+localPort = 46855
+externalPort = 3000
+
+[agent]
+expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Hugo Server"
+
+[[workflows.workflow]]
+name = "Hugo Server"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "~/.local/bin/hugo server --bind 0.0.0.0 --port 5000 --baseURL / --appendPort=false"
+waitForPort = 5000

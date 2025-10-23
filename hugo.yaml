@@ -1,4 +1,4 @@
-baseURL: '/'
+baseURL: 'https://prof-ramos.github.io/sherlockramosblog-of/'
 languageCode: pt-br
 defaultContentLanguage: pt-br
 title: 'My New Hugo Site'

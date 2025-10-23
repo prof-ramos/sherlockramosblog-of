@@ -4,6 +4,10 @@ defaultContentLanguage: pt-br
 title: 'My New Hugo Site'
 theme: PaperMod
 
+# GitHub Pages optimization
+canonifyURLs: false
+relativeURLs: false
+
 params:
   env: production
   description: "Meu site pessoal"
